@@ -9,6 +9,9 @@ export default function Content() {
   const [titre, setTitre] = useState();
   const [frequence, setFrequence] = useState();
 
+
+/******* Récupération des tâches de la bdd (Mongodb) ***************/
+
   useEffect(() => {
     const fetchTaches = async () => {
       const res = await fetch('http://localhost:5000/tasks');
@@ -20,6 +23,7 @@ export default function Content() {
 
   }, [])
 
+/****** Création d'une tâche *************/
 
   function creationCarte(e) {
     e.preventDefault();
@@ -64,12 +68,28 @@ export default function Content() {
   }
   
 
+  /**** Suppression d'une tâche *********/
 
-  function deleteCard(index) {
-    console.log(index);
-    const tabNettoyage = [...taches];
-    setTaches(tabNettoyage.filter(item => tabNettoyage.indexOf(item) !== tabNettoyage.indexOf(tabNettoyage[index])))
+  function deleteCard(id) {
+    // Envoyer une requête DELETE à l'API
+    fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de la tâche');
+      }
+      return response.json(); // Retourne la réponse JSON après la suppression
+    })
+    .then(() => {
+      // Mettre à jour l'état pour supprimer la tâche côté client
+      setTaches(prevTaches => prevTaches.filter(tache => tache._id !== id));
+    })
+    .catch(error => {
+      console.error('Erreur:', error);
+    });
   }
+  
 
   return (
     <div className="container px-3">
@@ -97,7 +117,7 @@ export default function Content() {
         taches.map((tache, index) => (
           <Card
             key={index}
-            index={index}
+            id = {tache._id}
             titre={tache.titre}
             frequence={tache.frequence}
             suppr={deleteCard}
