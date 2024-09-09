@@ -5,8 +5,8 @@ export default function Card({titre, frequence, index, suppr}) {
             <div className="content column">
                 <h3 className="px-4">{titre}</h3>
                 <p className="is-size-4 px-4">{frequence}</p>
-            </div>
             <button className="delete" onClick={() => suppr(index)}></button>
+            </div>
         </div>
       
     </div>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from '../Card/Card'
+import './Content.css';
+
 
 export default function Content() {
 
@@ -17,30 +19,6 @@ export default function Content() {
     fetchTaches();
 
   }, [])
-
-
-
-  // function creationCarte(e) {
-  //   e.preventDefault();
-  //   // const newTaches = [...taches, { titre: titre, frequence: frequence }];
-  //   // setTaches(newTaches);
-
-  //   const tache = {titre, frequence};
-
-    
-  //   const postData = await async (url = '', data = {}) => {
-      
-  //     const response = await fetch(url, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     const result = postData('http://localhost:5000/tasks', tache);
-  //   }
-  // }
 
 
   function creationCarte(e) {
@@ -74,11 +52,15 @@ export default function Content() {
     postData('http://localhost:5000/tasks', tache)
       .then(result => {
         console.log('Tâche ajoutée avec succès:', result);
+        setTaches(prevTaches => [...prevTaches, result]); // Ajouter la nouvelle tâche au tableau des tâches existant
+
         // Ici vous pouvez mettre à jour votre état ou faire d'autres actions nécessaires après l'ajout de la tâche
       })
       .catch(error => {
         console.error('Erreur lors de l\'ajout de la tâche:', error);
       });
+
+
   }
   
 
