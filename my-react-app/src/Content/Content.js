@@ -131,10 +131,9 @@ export default function Content() {
     }
   };
 
-
+ /*** Gestion de la tâche de sélection */
   const handleSelectTask = (tache) => {
     setSelectedTask(tache);
-    console.log(tache);
     setTitre(tache.titre);
     setFrequence(tache.frequence);
   }
@@ -159,7 +158,7 @@ export default function Content() {
 
         </div>
         <div className="control">
-          <button className="button is-link">Créer</button>
+          <button className="button is-link has-background-primary">Créer</button>
         </div>
       </form>
       {
@@ -172,7 +171,6 @@ export default function Content() {
             frequence={tache.frequence}
             suppr={deleteCard}
             tache={tache}
-          // update = {updateCard}
           />
         ))
       }

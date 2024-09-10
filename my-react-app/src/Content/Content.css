@@ -1,9 +1,6 @@
-.content {
-    position:relative;
+
+
+form {
+    margin-bottom: 100px;
 }
 
-.delete {
-    position:absolute;
-    top: 5px;
-    right: 20px;
-}

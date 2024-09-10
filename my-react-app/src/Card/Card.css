@@ -1,0 +1,12 @@
+.content {
+    position: relative;
+}
+
+.bouton {
+    display: flex;
+    justify-content: space-between;
+}
+
+.update {
+    justify-content: end;
+}
