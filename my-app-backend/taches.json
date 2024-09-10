@@ -1,42 +1,52 @@
 [
     {
         "titre": "Acheter des fournitures de bureau",
-        "frequence": "Tous les jours"
+        "frequence": "Tous les jours",
+        "etat":true
     },
     {
         "titre": "Réviser les objectifs du projet",
-        "frequence": "Une fois par jour"
+        "frequence": "Une fois par jour",
+        "etat":false
     },
     {
         "titre": "Préparer la réunion de demain",
-        "frequence": "Tous les jours"
+        "frequence": "Tous les jours",
+        "etat":true
     },
     {
         "titre": "Mettre à jour la documentation",
-        "frequence": "Matin et soir"
+        "frequence": "Matin et soir",
+        "etat":false
     },
     {
         "titre": "Configurer le nouveau serveur",
-        "frequence":  "Une fois par jour"
+        "frequence":  "Une fois par jour",
+        "etat":true
     },
     {
         "titre": "Analyser les retours des utilisateurs",
-        "frequence": "Matin et soir"
+        "frequence": "Matin et soir",
+        "etat":true
     },
     {
         "titre": "Créer un plan de test",
-        "frequence": "Matin et soir"
+        "frequence": "Matin et soir",
+        "etat":false
     },
     {
         "titre": "Faire un audit de sécurité",
-        "frequence": "2 fois par jour"
+        "frequence": "2 fois par jour",
+        "etat":false
     },
     {
         "titre": "Déployer la nouvelle version",
-        "frequence": "Une fois par mois"
+        "frequence": "Une fois par mois",
+        "etat":true
     },
     {
         "titre": "Organiser une formation pour l'équipe",
-        "frequence": "Tous les jours"
+        "frequence": "Tous les jours",
+        "etat":false
     }
 ]

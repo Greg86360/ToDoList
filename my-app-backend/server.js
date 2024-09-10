@@ -46,6 +46,26 @@ app.delete('/tasks/:id', async (req, res) => {
   res.json({ message: 'Task deleted' });
 });
 
+// Route PATCH pour mettre à jour une partie de la tâche (par exemple, son état)
+app.patch('/tasks/:id', async (req, res) => {
+  try {
+    const taskId = req.params.id;
+    const updatedData = req.body; // Les données envoyées dans la requête PATCH
+    
+    // Mettre à jour la tâche dans la base de données avec les nouvelles données
+    const updatedTask = await Task.findByIdAndUpdate(taskId, updatedData, { new: true });
+    
+    if (!updatedTask) {
+      return res.status(404).json({ message: 'Tâche non trouvée' });
+    }
+
+    res.json(updatedTask); // Retourner la tâche mise à jour
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour de la tâche:', error);
+    res.status(500).json({ message: 'Erreur lors de la mise à jour de la tâche' });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -8,6 +8,7 @@ export default function Content() {
   const [taches, setTaches] = useState([]);
   const [titre, setTitre] = useState();
   const [frequence, setFrequence] = useState();
+  const [etat, setEtat]=useState();
   const [selectedTask, setSelectedTask] = useState(null);
 
 
@@ -19,6 +20,7 @@ export default function Content() {
       const res = await fetch('http://localhost:5000/tasks');
       const data = await res.json();
       setTaches(data);
+      // console.log(data);
 
     }
     fetchTaches();
@@ -74,7 +76,7 @@ export default function Content() {
         const data = await response.json();
 
         // Mettre à jour la liste locale de tâches
-        setTaches(taches.map(t => (t._id === selectedTask._id ? data : t)));
+        setTaches(taches.map(tache => (tache._id === selectedTask._id ? data : tache)));
 
         // Réinitialiser le formulaire après mise à jour
         setSelectedTask(null);
@@ -131,6 +133,33 @@ export default function Content() {
     }
   };
 
+
+
+  /*** Mise à jour de l'état de la tâche (PATCH) */
+  const patchTask = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ etat : true }), // On met à jour l'état de la tâche
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Tâche mise à jour avec succès:', data);
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de la tâche:', error);
+    }
+  };
+  
+
+
  /*** Gestion de la tâche de sélection */
   const handleSelectTask = (tache) => {
     setSelectedTask(tache);
@@ -171,6 +200,7 @@ export default function Content() {
             frequence={tache.frequence}
             suppr={deleteCard}
             tache={tache}
+            patch = {patchTask}
           />
         ))
       }
