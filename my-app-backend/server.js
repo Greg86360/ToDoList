@@ -20,6 +20,7 @@ mongoose.connect('mongodb://localhost:27017/taches', {
 const TaskSchema = new mongoose.Schema({
   titre: { type: String, required: true },
   frequence: { type: String, default: false },
+  etat : {type: Boolean, default: false }
 });
 
 const Task = mongoose.model('Task', TaskSchema);
@@ -65,6 +66,7 @@ app.patch('/tasks/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la mise à jour de la tâche' });
   }
 });
+
 
 // Start the server
 app.listen(port, () => {

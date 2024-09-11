@@ -5,18 +5,25 @@ export default function Card({ titre, frequence, id, suppr, tache, update, patch
   
     // Utiliser un état pour suivre si la carte a été cliquée
     const [isClicked, setIsClicked] = useState(false);
+    // const [etat, setEtat]=useState();
 
     // Fonction pour basculer l'état quand on clique sur la carte
     const handleCardClick = () => {
       setIsClicked(!isClicked); // On inverse la valeur de isClicked
-      
+      // patch(id, );
     };
+
+    const handleEtatChange = (id, currentEtat) => {
+      setIsClicked(!isClicked);
+      const newEtat = !currentEtat; // Inverse l'état
+      patch(id, newEtat); // Appelle la fonction pour mettre à jour l'état
+    };
+    
     return (
       // <div className="card has-background-primary  my-5" onClick={()=>console.log("coucou")}>
       <div
-        className={`card ${isClicked ? 'has-background-warning' : 'has-background-primary'}`} // Change la classe dynamiquement
-        // onClick={handleCardClick} // Gestion du clic
-        onClick = {()=> console.log(patch(id,tache.etat))}>
+        className={`card ${isClicked ? 'has-background-warning' : 'has-background-primary'}`} 
+        onClick={() => handleEtatChange(tache._id, tache.etat)}> 
         <div className="card-content columns">
           <div className="content column">
             <div className='bouton'>

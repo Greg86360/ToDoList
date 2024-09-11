@@ -8,7 +8,7 @@ export default function Content() {
   const [taches, setTaches] = useState([]);
   const [titre, setTitre] = useState();
   const [frequence, setFrequence] = useState();
-  const [etat, setEtat]=useState();
+  const [etat, setEtat] = useState();
   const [selectedTask, setSelectedTask] = useState(null);
 
 
@@ -54,7 +54,6 @@ export default function Content() {
   /******** Ajout et  Mise à jour d'une tâche   ******/
   const handleUpdateTask = async (e) => {
     e.preventDefault();
-    console.log(selectedTask);
     if (selectedTask) {
       // Créer l'objet représentant la tâche mise à jour
       const updatedTask = { titre: titre, frequence: frequence };
@@ -136,31 +135,49 @@ export default function Content() {
 
 
   /*** Mise à jour de l'état de la tâche (PATCH) */
-  const patchTask = async (id) => {
+  const patchTask = async (id, updatedEtat) => {
     try {
+
       const response = await fetch(`http://localhost:5000/tasks/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ etat : true }), // On met à jour l'état de la tâche
+        body: JSON.stringify({ etat: updatedEtat }), // On met à jour l'état de la tâche
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const data = await response.json();
       console.log('Tâche mise à jour avec succès:', data);
-      return data;
+      // return data;
+      // Mise à jour de l'état local après le succès de la mise à jour
+      setTaches((prevTaches) =>
+      prevTaches.map((tache) => (tache._id === id ? { ...tache, etat: updatedEtat } : tache))
+      );
+
     } catch (error) {
       console.error('Erreur lors de la mise à jour de la tâche:', error);
     }
   };
-  
+
+  /** Gestion du clic sur la carte (tâche/changement d'état) ****/
+  // Utiliser un état pour suivre si la carte a été cliquée
+  // const [isClicked, setIsClicked] = useState(false);
+  // const [etat, setEtat]=useState();
+
+  // // Fonction pour basculer l'état quand on clique sur la carte
+  // const handleCardClick = (id) => {
+  //   setIsClicked(!isClicked); // On inverse la valeur de isClicked
+  //   setEtat(!etat);
+  //   patchTask(id,etat);
+  // };
 
 
- /*** Gestion de la tâche de sélection */
+
+  /*** Gestion de la tâche de sélection */
   const handleSelectTask = (tache) => {
     setSelectedTask(tache);
     setTitre(tache.titre);
@@ -195,12 +212,13 @@ export default function Content() {
           <Card
             key={index}
             update={handleSelectTask}
+            // click = {handleCardClick}
             id={tache._id}
             titre={tache.titre}
             frequence={tache.frequence}
             suppr={deleteCard}
             tache={tache}
-            patch = {patchTask}
+            patch={patchTask}
           />
         ))
       }
