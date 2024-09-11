@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './Card.css';
 export default function Card({ titre, frequence, id, suppr, tache, update, patch }) {
-  
+
     // Utiliser un état pour suivre si la carte a été cliquée
     const [isClicked, setIsClicked] = useState(false);
-    // const [etat, setEtat]=useState();
+
+
+    // Vérification de l'état pour définir la couleur de la tâche
+    useEffect(() => {
+      if (tache.etat === true) {
+        console.log("Complété");
+        setIsClicked(true);
+      } else {
+        console.log("À faire");
+        setIsClicked(false);
+      }
+    }, [tache.etat]);
 
     // Fonction pour basculer l'état quand on clique sur la carte
-    const handleCardClick = () => {
-      setIsClicked(!isClicked); // On inverse la valeur de isClicked
-      // patch(id, );
-    };
-
     const handleEtatChange = (id, currentEtat) => {
       setIsClicked(!isClicked);
       const newEtat = !currentEtat; // Inverse l'état
